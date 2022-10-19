@@ -1,0 +1,11 @@
+19780321 s4 green 64124 Volkswagen
+19800226 ab red 10086 Benz
+19820101 hd blue 19234 Toyota
+19830226 fb red 15086 Honda
+19870112 jd blue 19973 Toyota
+19880115 hf blue 11452 Chevrolet
+19920311 vc red 42214 Benz
+19960304 nj red 13246 Honda
+19990311 dc yellow 12214 Honda
+19990512 er blue 51413 Volkswagen
+20000612 e2 blue 51213 Chevrolet

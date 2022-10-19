@@ -1,0 +1,10 @@
+{
+    "files.encoding": "gbk",
+    "files.associations": {
+        "new": "cpp",
+        "iostream": "cpp",
+        "iomanip": "cpp"
+    },
+    "editor.fontSize": 13,
+    "C_Cpp.errorSquiggles": "Disabled"
+}
