@@ -1,3 +1,10 @@
+/*
+ * @Author: ֣᷷� 
+ * @Date: 2022-10-13 19:07:17 
+ * @Last Modified by:   ֣᷷� 
+ * @Id:202130462264
+ * @Last Modified time: 2022-10-13 19:07:17 
+ */
 #include"BinarySearchTree.h"
 #include<iostream>
 using namespace std;
@@ -47,7 +54,7 @@ void Node::inOrder(int&num){
     }
     if(this->left==nullptr&&this->right==nullptr){
         num++;
-        cout<<"leftNodes[value="<<this->value<<"] "<<endl;
+        cout<<"leafNodes[value="<<this->value<<"] "<<endl;
     }
     if(this->right!=nullptr){
         this->right->inOrder(num);

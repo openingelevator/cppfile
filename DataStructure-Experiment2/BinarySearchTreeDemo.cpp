@@ -1,15 +1,28 @@
+/*
+ * @Author: Ö£á··æ 
+ * @Date: 2022-10-13 19:07:10 
+ * @Last Modified by: Ö£á··æ
+ * @Id:202130462264
+ * @Last Modified time: 2022-10-13 19:54:21
+ */
 #include<iostream>
 #include"BinarySearchTree.h"
 #include"BinarySearchTree.cpp"
 using namespace std;
 int main(){
-    int arr1[10]={7,3,10,12,5,1,9,2,8,15};
-    int arr2[10]={9,13,10,6,8,11,10,4,5,19};
+    // int arr1[10]={7,3,10,12,5,1,9,2,8,15};
+    // int arr2[10]={9,13,10,6,8,11,1,4,5,19};
     int arr3[10]={17,8,20,6,9,25,14,19,4,5};
     BinarySearchTree* bst=new BinarySearchTree();
     for(int i=0;i<10;++i){
-        bst->Insert(new Node(arr1[i]));
+        bst->Insert(new Node(arr3[i]));
     }
+    // cout<<"³õÊ¼»¯Ê÷£¬ÇëÊäÈëÊ÷½áµãµÄÐòÁÐ"<<endl;
+    // int value;
+    // for(int i=0;i<10;++i){
+    //     cin>>value;
+    //     bst->Insert(new Node(value));
+    // }
     int choice = 0;
     while (true)
     {
