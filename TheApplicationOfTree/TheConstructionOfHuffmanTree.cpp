@@ -27,17 +27,14 @@ public:
     void printInfo(){
         cout<<"Node[value="<<value<<"] \n";
     }
-    void preOrder()
-    {
+    void preOrder(){
         this->printInfo();
         //递归向左子树前序遍历
-        if(this->left!=nullptr)
-        {
+        if(this->left!=nullptr){
             this->left->preOrder();
         }
         //递归向右子树前序遍历
-        if(this->right!=nullptr)
-        {
+        if(this->right!=nullptr){
             this->right->preOrder();
         }
     }
