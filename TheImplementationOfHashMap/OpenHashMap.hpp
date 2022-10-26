@@ -125,7 +125,7 @@ private:
     }
     //寻找关键码映射后在表中的实际位置
     int findPos(const HashObj&x,int flag=false){
-        int offset=1;
+        int offset=-1;
         int currentPos=myHash(x);
         //记录探测次数
         int count=0;
@@ -154,8 +154,8 @@ private:
     }
     //平方探测
     int quaraticProbe(int&offset){
-        offset+=2;
-        return offset;
+          offset+=2;
+          return offset;
     }
     //伪随机探测
     int pseudoRamdomProbe(){
