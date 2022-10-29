@@ -1,3 +1,10 @@
+/*
+ * @Author: 郑岱锋 
+ * @Date: 2022-10-27 20:39:25 
+ * @StudentId:202130462264
+ * @Last Modified by:   郑岱锋 
+ * @Last Modified time: 2022-10-27 20:39:25 
+ */
 #pragma once
 #include<vector>
 #include<cmath>
@@ -5,7 +12,7 @@ using namespace std;
 //判断一个数是否为素数
 bool isPrime(int val){
     int flag=true;
-    for(int i=2;i<sqrt(val)+1;++i){
+    for(int i=2;i<sqrt(val)+1;i+=1){
         if(val%i==0){
             flag=false;
         }
@@ -27,7 +34,8 @@ template<typename HashObj>
 class HashTable{
 public:
     //构造函数，初始化数组的大小为素数
-    explicit HashTable(int size=17):array(nextPrime(size)){
+    explicit HashTable(int size=61):array(nextPrime(size)){
+        prime=size;
         //初始化装填因子为0
         this->loadFactor=0;
         //初始化数组状态为空
@@ -92,7 +100,7 @@ public:
     void printInfo()const{
         for(int i=0;i<array.size();++i){
             if(array[i].state==ACTIVE){
-            cout<<"HashTable["<<i<<"]="<<array[i].element<<endl;
+            cout<<"HashTable["<<i<<"]="<<array[i].element<<"  collisionTimes="<<array[i].collisionTimes<<endl;
             }
         }
     }
@@ -113,7 +121,7 @@ private:
     vector<HashEntry>array;
     int currentSize;
     int loadFactor;
-    int prime=nextPrime(array.size());
+    int prime;
 
     //判断哈希表中槽的状态是否活跃
     bool isActive(int currentPos)const{
@@ -125,26 +133,31 @@ private:
     }
     //寻找关键码映射后在表中的实际位置
     int findPos(const HashObj&x,int flag=false){
-        int offset=-1;
+        // int offset=-1;
         int currentPos=myHash(x);
         //记录探测次数
         int count=0;
-        while(array[currentPos].state!=EMPTY&&
-        array[currentPos].element!=x){
+        // int bias=doubleHash(x);
+        while(array[currentPos].state!=EMPTY
+        &&array[currentPos].element!=x){
             // currentPos+=linearProbe(offset);
-            currentPos+=quaraticProbe(offset);
+            // currentPos+=quadraticProbe(offset);
+            int size=array.size();
+            currentPos+=pseudoRamdomProbe(size);
+            currentPos+=bias;
 
             if(currentPos>=array.size()){
                 currentPos-=array.size();
             }
-            if(flag==true){
-                array[currentPos].collisionTimes++;
-            }
-            //若冲突次数过多，则结束该次探测
             count++;
+             //若冲突次数过多，则结束该次探测
             if(count>array.size()){
-                return -1;
+                currentPos=-1;
+                break;
             }
+        }
+        if(flag==true&&currentPos!=-1){
+          array[currentPos].collisionTimes=count;
         }
         return currentPos;
     }
@@ -153,18 +166,18 @@ private:
         return offset;
     }
     //平方探测
-    int quaraticProbe(int&offset){
+    int quadraticProbe(int&offset){
           offset+=2;
           return offset;
     }
     //伪随机探测
-    int pseudoRamdomProbe(){
-        int size=array.size();
+    int pseudoRamdomProbe(int size){
         return rand()%size;
     }
     //双散列探测
     size_t doubleHash(const HashObj&x){
-        return x%prime;
+        //防止x经过第二个散列函数映射后的值为0，导致整个探测序列为0的情况
+        return x%prime+1;
     }
     //再哈希
     void rehash(){
