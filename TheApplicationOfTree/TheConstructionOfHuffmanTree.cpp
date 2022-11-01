@@ -42,7 +42,7 @@ public:
 class Cmp{
     public:
     bool operator()(Node* n1,Node* n2){
-        return n1->value<n2->value;
+        return n1->value<=n2->value;
     }
 };
 Node* CreateHuffmanTree(vector<int>&arr){

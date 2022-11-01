@@ -35,15 +35,19 @@ void heapSort(vector<int>&arr){
         //½»»»
         swap(arr[0],arr[j]);
         adjustHeap(arr,0,j);
+        for(auto i:arr){
+        cout<<i<<",";
+    }
+    cout<<endl;
     }
 
 }
 int main(){
-    vector<int>arr{9,6,5,8,4,7};
+    vector<int>arr{142, 543, 123, 65, 453, 879, 572, 434, 111, 242, 811, 102};
     heapSort(arr);
-    for(auto i:arr){
-        cout<<i<<" ";
-    }
+    // for(auto i:arr){
+    //     cout<<i<<" ";
+    // }
     system("pause");
     return 0;
 }

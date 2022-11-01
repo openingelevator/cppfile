@@ -43,7 +43,7 @@ public:
 class Cmp{
 public:
     bool operator()(Node* n1,Node* n2){
-        return n1->weight<n2->weight;
+        return n1->weight<=n2->weight;
     }
 };
 
@@ -130,7 +130,8 @@ int main(){
     // }
     vector<Node*>temp=getNodes(contentByte);
     Node* root=CreateHuffmanTree(temp);
-    // PreOrder(root);
+    PreOrder(root);
+    cout<<endl;
     getCodes(root,"",strBuilder);
     for(auto i:huffmanCode){
         cout<<i.first<<": "<<i.second<<endl;
