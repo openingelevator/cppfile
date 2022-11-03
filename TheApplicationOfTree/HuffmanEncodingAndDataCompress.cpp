@@ -12,6 +12,8 @@
 #include<deque>
 #include<algorithm>
 #include<unordered_map>
+#include<iomanip>
+#include<cmath>
 using namespace std;
 class Node{
 public:
@@ -114,13 +116,56 @@ void getCodes(Node*node,string code,string&temp){
         }
     }
 }
-
-int main(){
-    string str="i like like like java do you like a java";
+char strTochar(string str){
+    int len=str.length();
+    char ans;
+    int temp=0;
+    for(int i=0;i<len;i++){
+        temp=temp*2+str[i]-'0';
+    }
+    if(temp>=128){
+        temp-=256;
+    }
+    ans=(char)(temp);
+    return ans;
+}
+//将字符串对应的bytes数组，通过生成的赫夫曼编码表，返回一个赫夫曼编码压缩后的byte
+vector<char>zip(vector<char>bytes,unordered_map<char,string>huffmancode){
+    string str;
+    for(char c:bytes){
+        str+=huffmanCode[c];
+    }
+    // cout<<str<<endl;
+    // cout<<str.length()<<endl;
+    //将对应字符串转成byte数组
+    int len=(str.length()%8==0)?str.length()/8:str.length()/8+1;
+    //创建一个存储压缩后的byte数组
+    vector<char>temp(len);
+    int index=0;
+    for(int i=0;i<str.length();i+=8){
+        string byte;
+        if(i+8>str.length()){
+            byte=str.substr(i);
+        }else{
+            byte=str.substr(i,8);
+        }
+        char ch=strTochar(byte);
+        temp[index]=ch;
+        // cout<<(int)ch<<" "<<byte<<endl;
+        index++;
+    }
+    // for(auto i:temp){
+    //     cout<<(int)i<<endl;
+    // }
+    return temp;
+}
+vector<char>huffmanZip(string originStr){
     vector<char>contentByte;
-    for(auto item:str){
+    for(auto item:originStr){
         contentByte.push_back(item);
     }
+    vector<Node*>temp=getNodes(contentByte);
+    Node* root=CreateHuffmanTree(temp);
     // unordered_map<char,int>counts;
     // for(char i:contentByte){
     //     counts[i]++;
@@ -128,13 +173,20 @@ int main(){
     // for(auto i:counts){
     //     cout<<"字符"<<i.first<<"出现次数为"<<i.second<<endl;
     // }
-    vector<Node*>temp=getNodes(contentByte);
-    Node* root=CreateHuffmanTree(temp);
-    PreOrder(root);
-    cout<<endl;
+    // PreOrder(root);
+    // cout<<endl;
     getCodes(root,"",strBuilder);
     for(auto i:huffmanCode){
         cout<<i.first<<": "<<i.second<<endl;
+    }
+    vector<char>transByte=zip(contentByte,huffmanCode);
+    return transByte;
+}
+int main(){
+    string str="i like like like java do you like a java";
+    vector<char>byte=huffmanZip(str);
+    for(auto i:byte){
+        cout<<(int)i<<endl;
     }
     system("pause");
     return 0;

@@ -5,7 +5,9 @@
         "iostream": "cpp",
         "iomanip": "cpp",
         "*.tcc": "cpp",
-        "vector": "cpp"
+        "vector": "cpp",
+        "map": "cpp",
+        "cstddef": "cpp"
     },
     "editor.fontSize": 13,
     "C_Cpp.errorSquiggles": "Disabled"
