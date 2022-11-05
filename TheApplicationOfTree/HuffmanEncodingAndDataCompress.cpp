@@ -116,9 +116,9 @@ void getCodes(Node*node,string code,string&temp){
         }
     }
 }
-char strTochar(string str){
+short strTochar(string str){
     int len=str.length();
-    char ans;
+    short ans;
     int temp=0;
     for(int i=0;i<len;i++){
         temp=temp*2+str[i]-'0';
@@ -126,30 +126,33 @@ char strTochar(string str){
     if(temp>=128){
         temp-=256;
     }
-    ans=(char)(temp);
+    ans=temp;
     return ans;
 }
 //将字符串对应的bytes数组，通过生成的赫夫曼编码表，返回一个赫夫曼编码压缩后的byte
-vector<char>zip(vector<char>bytes,unordered_map<char,string>huffmancode){
+vector<short>zip(vector<char>bytes,unordered_map<char,string>huffmancode){
     string str;
     for(char c:bytes){
         str+=huffmanCode[c];
     }
-    // cout<<str<<endl;
+    cout<<str<<endl;
     // cout<<str.length()<<endl;
     //将对应字符串转成byte数组
     int len=(str.length()%8==0)?str.length()/8:str.length()/8+1;
     //创建一个存储压缩后的byte数组
-    vector<char>temp(len);
+    vector<short>temp(len+1);
+    fill(temp.begin(),temp.end(),0);
     int index=0;
     for(int i=0;i<str.length();i+=8){
         string byte;
         if(i+8>str.length()){
             byte=str.substr(i);
+            short bias=i+8-str.length();
+            temp[index+1]=bias;
         }else{
             byte=str.substr(i,8);
         }
-        char ch=strTochar(byte);
+        short ch=strTochar(byte);
         temp[index]=ch;
         // cout<<(int)ch<<" "<<byte<<endl;
         index++;
@@ -159,7 +162,7 @@ vector<char>zip(vector<char>bytes,unordered_map<char,string>huffmancode){
     // }
     return temp;
 }
-vector<char>huffmanZip(string originStr){
+vector<short>huffmanZip(string originStr){
     vector<char>contentByte;
     for(auto item:originStr){
         contentByte.push_back(item);
@@ -179,15 +182,90 @@ vector<char>huffmanZip(string originStr){
     for(auto i:huffmanCode){
         cout<<i.first<<": "<<i.second<<endl;
     }
-    vector<char>transByte=zip(contentByte,huffmanCode);
+    vector<short>transByte=zip(contentByte,huffmanCode);
     return transByte;
 }
-int main(){
-    string str="i like like like java do you like a java";
-    vector<char>byte=huffmanZip(str);
-    for(auto i:byte){
-        cout<<(int)i<<endl;
+//数据解压
+//将压缩后的编码数组转成赫夫曼编码对应的二进制的字符串
+//将整形转为二进制字符串，bias为最后一个字段补足到8位的位数
+string intToBinaryString(int num,int bias){
+    string ans(8-bias,'0');
+    if(num<0){
+        num+=256;
     }
+    int temp;
+    int index=ans.length()-1;
+    while(num>0){
+        temp=num%2;
+        num/=2;
+        ans[index]=temp+'0';
+        index--;
+    }
+    // cout<<ans<<endl;
+    return ans;
+}
+//完成对压缩数据的解码
+vector<char>decode(vector<short>huffmanBytes,unordered_map<char,string>huffmancode){
+    auto ite=huffmanBytes.end()-1;
+    short lastBitBias=*ite;
+    // cout<<*ite<<endl;
+    int trueLen=huffmanBytes.size()-1;
+    // cout<<trueLen<<endl;
+    string binaryStr;
+    int tempVal=0;
+    for(int i=0;i<trueLen;++i){
+        tempVal=huffmanBytes[i];
+        // cout<<tempVal<<endl;
+        if(i==trueLen-1){
+           binaryStr+=intToBinaryString(tempVal,lastBitBias);
+        }else{
+            binaryStr+=intToBinaryString(tempVal,0);
+        }
+    }
+    // cout<<binaryStr<<endl;
+    //将赫夫曼编码表进行调换
+    unordered_map<string,char>Map;
+    for(auto entry:huffmanCode){
+        Map[entry.second]=entry.first;
+    }
+    // for(auto i:Map){
+    //     cout<<i.first<<"="<<i.second<<endl;
+    // }
+    vector<char>ans;
+    int i=0;
+    while(i<binaryStr.length()){
+        int count=1;
+        while(true){
+            string key=binaryStr.substr(i,count);
+            auto tempIte=Map.find(key);
+            if(tempIte!=Map.end()){
+                ans.push_back(tempIte->second);
+                break;
+            }else{
+                count++;
+            }
+            if(i+count>binaryStr.length()){
+                break;
+            }
+        }
+        i+=count;
+    }
+    return ans;
+}
+
+int main(){
+    // string str="i like like like java do you like a java";
+    // vector<short>byte=huffmanZip(str);
+    // // for(auto i:byte){
+    // //     cout<<i<<endl;
+    // // }
+    // vector<char>finalAns=decode(byte,huffmanCode);
+    // for(auto i:finalAns){
+    //     cout<<i;
+    // }
+
+    
+    cout<<endl;
     system("pause");
     return 0;
 }
