@@ -7,6 +7,7 @@ private:
     vector<bool>isVisited;//存储结点是否被访问的标志
     vector<vector<int>>edges;
     int numOfEdges;
+
 public:
     Graph(int numOfVertex){
         //初始化矩阵与vertexList
@@ -46,9 +47,13 @@ public:
         this->vertexList.push_back(vertex);
     }
     //添加边
-    void insertEdge(int v1,int v2,int weight){
+    void insertEdge(int v1,int v2,int weight,bool flag=true){
+        if(flag){
         this->edges[v1][v2]=weight;
         this->edges[v2][v1]=weight;
+        }else{
+            this->edges[v1][v2]=weight;
+        }
         this->numOfEdges++;
     }
     void printGraph(){
