@@ -54,7 +54,9 @@ public:
         }else{
             this->edges[v1][v2]=weight;
         }
-        this->numOfEdges++;
+        if(weight!=10000){
+            this->numOfEdges++;
+        }
     }
     void printGraph(){
         cout<<"图的邻接矩阵如下"<<endl;

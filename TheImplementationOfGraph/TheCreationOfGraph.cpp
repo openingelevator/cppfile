@@ -14,7 +14,6 @@ int main(){
     graph.insertEdge(1,3,1);
     graph.insertEdge(1,4,1);
     graph.printGraph();
-
     system("pause");
     return 0;
 }

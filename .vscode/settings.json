@@ -8,7 +8,8 @@
         "vector": "cpp",
         "map": "cpp",
         "cstddef": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "iosfwd": "cpp"
     },
     "editor.fontSize": 13,
     "C_Cpp.errorSquiggles": "Disabled"
