@@ -18,7 +18,7 @@ void adjustHeap(vector<int>&arr,int i,int length){
             break;
         }
     }
-    //当循环结束后，我们已经将以i为父结点的树的最大值放在了最顶上
+    //当循环结束后，我们已经将以i为父结点的树的最大值放在了堆顶上
     arr[i]=temp;
 }
 void swap(int&a, int&b){
