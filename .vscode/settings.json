@@ -1,6 +1,11 @@
 {
     "files.encoding": "gbk",
     "files.associations": {
+        "*.js": "javascript",
+        "*.json": "jsonc",
+        "*.cjson": "jsonc",
+        "*.wxss": "css",
+        "*.wxs": "javascript",
         "new": "cpp",
         "iostream": "cpp",
         "iomanip": "cpp",
@@ -9,7 +14,14 @@
         "map": "cpp",
         "cstddef": "cpp",
         "ostream": "cpp",
-        "iosfwd": "cpp"
+        "iosfwd": "cpp",
+        "semaphore.h": "c",
+        "stat.h": "c",
+        "fcntl.h": "c",
+        "unistd.h": "c",
+        "stdlib.h": "c",
+        "stdio.h": "c",
+        "pthread.h": "c"
     },
     "editor.fontSize": 13,
     "C_Cpp.errorSquiggles": "Disabled"
