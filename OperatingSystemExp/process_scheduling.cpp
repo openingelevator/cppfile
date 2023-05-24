@@ -187,14 +187,19 @@ int main()
 					//计算进程执行时间
           exe_time=cur_proc.execute_time;
           time+=exe_time;
+					//将该进程剩余执行时间置零
 					ca.setExeTime(0,cur);
+					//设置该进程状态为完成态
 					ca.setState(FINSHED,cur);
+					//将进程移出队列
 					ca.getQueue();
         }else{//进程在时间片内不能执行完，进程在时间片结束后移动到队尾 
           exe_time=time_slices;
 					time+=exe_time;
+					//设置该进程剩余完成时间
 					cur_proc.execute_time-=exe_time;
           ca.setExeTime(cur_proc.execute_time,cur);
+					//将该进程从队首移向队尾
           ca.moveRear();
         }
         if(time<next_proc.arrive_time){
@@ -226,15 +231,14 @@ int main()
 	while (!ca2.isEmpty())
 	{
 		cout<<"第"<<count<<"轮进程调度"<<endl;
-		// 获取队列中首个进程的位置，同时计算出逻辑上队尾指针的位置
+		//获取队列中首个进程的位置，同时计算出逻辑上队尾指针的位置
     front = ca2.getFront();
     logic_rear=ca2.validSize()+front;
-		// 将当前执行运行进程的指针指向队首进程
+		//将当前执行运行进程的指针指向队首进程
     cur=front;
 		if(count==1){
 		while(cur<logic_rear){
 			  cur_proc=ca2.getProcess(cur);
-				//为到达进程分配时间片
         cout<<"选中进程"<<cur_proc.pid<<"---该进程在时间点"<<time<<"开始执行---";
 				int exe_time;
         next_proc=ca2.getProcess(cur+1);
@@ -246,7 +250,7 @@ int main()
           cur_proc.execute_time-=exe_time;
 					ca2.setExeTime(cur_proc.execute_time,cur);
           ca2.moveRear();
-				}else{
+				}else{//该进程正常执行完，处理机空闲，等待下一个进程到达
 					exe_time=cur_proc.execute_time;
 					time=(time+exe_time>next_proc.arrive_time)?time+exe_time:next_proc.arrive_time;
 					ca2.setExeTime(0,cur);
@@ -257,10 +261,10 @@ int main()
         cur++;
 		}
 		}else{
+			//第一轮执行完后，没有新的进程到达，则按顺序将队列中剩余的进程执行完
 			int exe_time;
 			for(int i=front;i<logic_rear;++i){
 					cur_proc=ca2.getProcess(i);
-					//为到达进程分配时间片
           cout<<"选中进程"<<cur_proc.pid<<"---该进程在时间点"<<time<<"开始执行---";
 				  exe_time=cur_proc.execute_time;
 					time+=exe_time;

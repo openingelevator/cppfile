@@ -50,8 +50,10 @@ void* man_wants_to_enter(void* arg) {
 void* woman_leaves(void* arg) {
     pthread_mutex_lock(&bathroom_mutex);  // 加锁
 
-    bathroom_state = 0;  // 离开浴室，设置状态为空
     num_women--;
+    if(num_men==0){
+        bathroom_state = 0;  // 离开浴室，设置状态为空
+    }
     printf("Woman left bathroom. There are %d women\n", num_women);
 
     pthread_cond_signal(&man_cond);  // 通知男生可以进入
@@ -65,8 +67,10 @@ void* woman_leaves(void* arg) {
 void* man_leaves(void* arg) {
     pthread_mutex_lock(&bathroom_mutex);  // 加锁
 
-    bathroom_state = 0;  // 离开浴室，设置状态为空
     num_men--;
+    if(num_men==0){
+        bathroom_state = 0;  // 离开浴室，设置状态为空
+    }
     printf("Man left bathroom. There are %d men\n", num_men);
 
     pthread_cond_signal(&man_cond);  // 通知男生可以进入
