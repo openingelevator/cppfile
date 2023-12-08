@@ -1,5 +1,5 @@
 /*
- * @Author: Ö£á··æ 
+ * @Author: Ö£á··æ
  * @Date: 2022-10-27 20:41:59 
  * @StudentId:202130462264
  * @Last Modified by:   Ö£á··æ 
@@ -32,10 +32,9 @@ int main()
         ht.insert(arr[i]);
     }
     ht.printInfo();
-    // cout<<"ÏßÐÔÌ½²â³åÍ»´ÎÊýÎª";
-    // cout<<"Æ½·½Ì½²â³åÍ»´ÎÊýÎª";
-    cout << "Î±Ëæ»úÌ½²â³åÍ»´ÎÊýÎª";
-    // cout<<"Ë«É¢ÁÐÌ½²â³åÍ»´ÎÊýÎª";
+   
+    cout << "Î±Ëæ»úÌ½²â³åÍ»´ÎÊýÎª"<<endl;
+   
     cout << ht.collisionTimes() << endl;
     system("pause");
     return 0;
