@@ -181,7 +181,7 @@ public:
                 //如果要删除的结点有左子结点
                 if(targetNode->left!=nullptr){
                     if(parent!=nullptr){
-                    if(parent->left->value==val){
+                    if(parent->left!=nullptr&&parent->left->value==val){
                         parent->left=targetNode->left;
                     }else{
                         parent->right=targetNode->left;
@@ -191,7 +191,7 @@ public:
                     }
                 }else{//如果要删除的结点有右子结点
                     if(parent!=nullptr){
-                    if(parent->left->value==val){
+                    if(parent->left!=nullptr&&parent->left->value==val){
                         parent->left=targetNode->right;
                     }else{
                         parent->right=targetNode->right;
