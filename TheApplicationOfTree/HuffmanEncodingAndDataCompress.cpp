@@ -254,17 +254,15 @@ vector<char>decode(vector<short>huffmanBytes,unordered_map<char,string>huffmanco
 }
 
 int main(){
-    // string str="i like like like java do you like a java";
-    // vector<short>byte=huffmanZip(str);
-    // // for(auto i:byte){
-    // //     cout<<i<<endl;
-    // // }
-    // vector<char>finalAns=decode(byte,huffmanCode);
-    // for(auto i:finalAns){
-    //     cout<<i;
+    string str="i like like like java do you like a java";
+    vector<short>byte=huffmanZip(str);
+    // for(auto i:byte){
+    //     cout<<i<<endl;
     // }
-
-    
+    vector<char>finalAns=decode(byte,huffmanCode);
+    for(auto i:finalAns){
+        cout<<i;
+    }
     cout<<endl;
     system("pause");
     return 0;
